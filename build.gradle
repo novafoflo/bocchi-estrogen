@@ -1,0 +1,34 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '1.0.21'
+}
+version = '1.0.0'
+group = 'com.example.bocchi'
+base { archivesName = 'bocchi_estrogen' }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = '21.1.172'
+    runs { client { client() } }
+    mods { bocchi_estrogen { sourceSet sourceSets.main } }
+}
+
+// Les 3 textures PNG sont generees a la compilation (evite d'envoyer des images sur GitHub)
+def texOut = layout.buildDirectory.dir('generated/tex').get().asFile
+def genTextures = tasks.register('genTextures') {
+    outputs.dir(texOut)
+    doLast {
+        def t = [
+            'assets/bocchi_estrogen/textures/entity/bocchi.png': 'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAmUlEQVR4nO3QMREAIBDAsPdvATNowgDIyECH7L3OWfv+bHSA1gAdoDVAB2gN0AFaA3SA1gAdoDVAB2gN0AFaA3SA1gAdoDVAB2gN0AFaA3SA1gAdoDVAB2gN0AFaA3SA1gAdoDVAB2gN0AFaA3SA1gAdoDVAB2gN0AFaA3SA1gAdoDVAB2gN0AFaA3SA1gAdoDVAB2gN0AHaAzDXww1OccklAAAAAElFTkSuQmCC',
+            'assets/bocchi_estrogen/textures/item/bocchi_pill.png': 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPElEQVR4nGNgGLTg0+wD/0EYBkjWiG4AUQaha8ZmAF5DKDIAm2ZcBmA1ZBgYMPCxgMsQkjRjM4hkjXQHAOOml9CVFESSAAAAAElFTkSuQmCC',
+            'assets/bocchi_estrogen/textures/mob_effect/bocchi.png': 'iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAASUlEQVR4nGNgoDX4NPvAf2yYYgNIMpBYQ/AaRqohOA2jikHokjbT7sAxPjEMwwa/QWSH0+AzaPClI6pmEVINw2sIMQYSbQC5AACnjqKxWCszDAAAAABJRU5ErkJggg==',
+        ]
+        t.each { path, b64 ->
+            def f = new File(texOut, path)
+            f.parentFile.mkdirs()
+            f.bytes = java.util.Base64.getDecoder().decode(b64)
+        }
+    }
+}
+sourceSets.main.resources.srcDir(texOut)
+tasks.named('processResources') { dependsOn genTextures }
