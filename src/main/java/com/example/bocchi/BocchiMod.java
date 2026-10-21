@@ -32,6 +32,7 @@ public class BocchiMod {
         ITEMS.register(modBus);
         modBus.addListener(BocchiMod::tabs);
         container.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        container.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     }
 
     private static void tabs(BuildCreativeModeTabContentsEvent e) {
