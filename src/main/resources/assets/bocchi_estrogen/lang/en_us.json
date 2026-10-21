@@ -1,4 +1,7 @@
 {
   "effect.bocchi_estrogen.bocchi": "Bocchi",
-  "item.bocchi_estrogen.bocchi_pill": "Bocchi Pill"
+  "item.bocchi_estrogen.bocchi_pill": "Bocchi Pill",
+  "key.categories.bocchi_estrogen": "Bocchi Estrogen",
+  "key.bocchi_estrogen.grow": "Bigger",
+  "key.bocchi_estrogen.shrink": "Smaller"
 }
