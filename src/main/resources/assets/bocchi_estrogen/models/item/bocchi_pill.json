@@ -1,0 +1,1 @@
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "bocchi_estrogen:item/bocchi_pill" } }
